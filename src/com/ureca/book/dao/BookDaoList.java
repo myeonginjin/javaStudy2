@@ -22,9 +22,9 @@ public class BookDaoList implements BookDao {
 	//for문 돌려서 인덱스 찾아주는거 다 this.select사용해서 코드 중복 피해주기	
 	public BookDaoList() {
 		ba = new ArrayList<>();
-		Book b1 = new Book("1004","운영체제론",15000);
-		Book b2 = new Book("1005","데이터베이스",19000);
-		Book b3 = new Book("1006","네트워크",17000);
+		Book b1 = new Book("104","운영체제론",15000);
+		Book b2 = new Book("105","데이터베이스",19000);
+		Book b3 = new Book("106","네트워크",17000);
 		
 		ba.add(b1);
 		ba.add(b2);
@@ -37,83 +37,102 @@ public class BookDaoList implements BookDao {
 
 	@Override
 	public int insert(Book b) {
-		int findIndex = -1;
-		int curIndex = 0;
-		for (Book elm : ba) {
-			if (elm.getNum().equals(b.getNum())) findIndex = curIndex;
-			curIndex++;
-		}
+//		int findIndex = -1;
+//		int curIndex = 0;
+//		for (Book elm : ba) {
+//			if (elm.getNum().equals(b.getNum())) findIndex = curIndex;
+//			curIndex++;
+//		}
+//		
+//		if (findIndex == -1) {
+//			ba.add(b);
+//		}
+//		else {
+//			update(b);
+//		}
+//		
+//		
+//		return 0;
 		
-		if (findIndex == -1) {
-			ba.add(b);
+		//강사님 코드
+		if(select(b.getNum())!=null) {
+			return 0;
 		}
-		else {
-			update(b);
-		}
+		this.ba.add(b);
+		return 1;
+	}
+
+	@Override
+	public int update(Book b) {
+//		int findIndex = -1;
+//		int curIndex = 0;
+//		for (Book elm : ba) {
+//			if (elm.getNum().equals(b.getNum())) findIndex = curIndex;
+//			curIndex++;
+//		}
+//		
+//		if(findIndex > -1 && findIndex < ba.size()) {
+//			ba.set(findIndex, b);
+//		}
+//		
+//		return findIndex;
 		
+		//강사님 코드
+		Book t = select(b.getNum());
+		if(t != null) {
+			ba.set(ba.indexOf(t), b);
+			return 1;
+		}
+		return 0;
+		
+	}
+
+	@Override
+	public int delete(String num) {
+//		int findIndex = -1;
+//		int curIndex = 0;
+//		for (Book elm : ba) {
+//			if (elm.getNum().equals(num)) findIndex = curIndex;
+//			curIndex++;
+//		}
+//		
+//		if(findIndex > -1 && findIndex < ba.size() ) {
+//			ba.remove(findIndex);
+//		}
+//		
+//		return findIndex;
+		
+		
+		//
+		Book t = select(num);
+		if(t!=null) {
+			ba.remove(t);
+			return 1;
+		}
 		
 		return 0;
 	}
 
 	@Override
-	public int update(Book b) {
-		int findIndex = -1;
-		int curIndex = 0;
-		for (Book elm : ba) {
-			if (elm.getNum().equals(b.getNum())) findIndex = curIndex;
-			curIndex++;
-		}
-		
-		if(findIndex > -1 && findIndex < ba.size()) {
-			ba.set(findIndex, b);
-		}
-		
-		return findIndex;
-	}
-
-	@Override
-	public int delete(String num) {
-		int findIndex = -1;
-		int curIndex = 0;
-		for (Book elm : ba) {
-			if (elm.getNum().equals(num)) findIndex = curIndex;
-			curIndex++;
-		}
-		
-		if(findIndex > -1 && findIndex < ba.size() ) {
-			ba.remove(findIndex);
-		}
-		
-		return findIndex;
-		
-		
-		//crud 다 이렇게 셀렉트 메서드 쓰는 방향으로 변경해줘야함ㄴ
-//		Book t = select(num);
-//		if(t==null) return 0;
-//		ba.remove(t);
-//		return 1;
-	}
-
-	@Override
 	public Book select(String num) {
-		int findIndex = -1;
-		int curIndex = 0;
-		for (Book elm : ba) {
-			if (elm.getNum().equals(num)) findIndex = curIndex;
-			curIndex++;
-		}
-		
-		if (findIndex > -1 && findIndex < ba.size()) {
-			return ba.get(findIndex);
-		}
-			
-		return null;
+//		int findIndex = -1;
+//		int curIndex = 0;
+//		for (Book elm : ba) {
+//			if (elm.getNum().equals(num)) findIndex = curIndex;
+//			curIndex++;
+//		}
+//		
+//		if (findIndex > -1 && findIndex < ba.size()) {
+//			return ba.get(findIndex);
+//		}
+//			
+//		return null;
 		
 		//강사님 답안
-//		for (Book b : ba) {
-//			if(b.getNum().equals(num)) return b;
-//		}
-//		return null;
+		for (Book b : ba) {
+			if(b.getNum().equals(num)) return b;
+		}
+		return null;
 	}
 
 	@Override
@@ -123,5 +142,13 @@ public class BookDaoList implements BookDao {
 		//기존 기본 북 리스트의 원본값을 변경할수도있으니 복사한 리스트를 넘겨주기
 		return ba.subList(0, ba.size());
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(ba);
+		return super.toString();
+	}
+	
 
 }
