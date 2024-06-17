@@ -20,7 +20,7 @@ public class BookDaoList implements BookDao {
 	//BookDaoList()가 먼저 실행되는데 거기서 아직 초기화되지않은 ba를 참조하니까
 	
 	//for문 돌려서 인덱스 찾아주는거 다 this.select사용해서 코드 중복 피해주기	
-	public BookDaoList() {
+	private BookDaoList() {
 		ba = new ArrayList<>();
 		Book b1 = new Book("104","운영체제론",15000);
 		Book b2 = new Book("105","데이터베이스",19000);
