@@ -1,3 +1,9 @@
+-- drop schema if exists urecadb;
+-- create schema if not exists urecadb
+-- character set utf8mb4	collate utf8mb4_0900_as_cs;
+
+
+
 use urecadb;
 
 drop table if exists book;
